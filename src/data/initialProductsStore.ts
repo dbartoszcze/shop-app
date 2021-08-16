@@ -1,0 +1,5 @@
+const initialProductsStore = {
+}
+
+
+export {initialProductsStore}
