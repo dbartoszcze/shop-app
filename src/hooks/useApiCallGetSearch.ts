@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { IUseApiCallGetSearch } from '../definitions';
 
-const useApiCallGetSearch = <IData>({
+const useApiCallGetSearch = ({
   getAllValues,
   pageSize = 10,
   store,
@@ -34,12 +34,12 @@ const useApiCallGetSearch = <IData>({
 
       dispatch(completedDispatch());
     },
-    [getAllValues, itemsPerPage, actualPage],
+    [getAllValues, itemsPerPage, actualPage, loadedDispatch, failureDispatch, completedDispatch, fetchingDispatch],
   );
 
   useEffect(() => {
     store.dispatch(getData);
-  }, [itemsPerPage, actualPage, getData]);
+  }, [itemsPerPage, actualPage, getData, store]);
 
   const pageChanged = useCallback((page: number, e?: number) => {
     setActualPage(page);
