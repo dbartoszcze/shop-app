@@ -1,32 +1,22 @@
 import React from 'react';
+import { ConfigProvider } from 'antd';
+import plPL from 'antd/es/locale/pl_PL';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
-import Pages from "./views/Pages";
-import {compose, createStore} from 'redux'
-import {rootReducer} from "./reducers/rootReducer";
-import {Provider} from 'react-redux';
-
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-let store = createStore(
-    rootReducer,
-    composeEnhancers()
-)
+import { BrowserRouter } from 'react-router-dom';
+import Pages from './views/Pages';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 function App() {
-    return (
-        <Provider store={store}>
-            <BrowserRouter>
-                <Pages/>
-            </BrowserRouter>
-        </Provider>
-    );
+  return (
+    <ConfigProvider locale={plPL}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Pages />
+        </BrowserRouter>
+      </Provider>
+    </ConfigProvider>
+  );
 }
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
