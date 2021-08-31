@@ -17,7 +17,7 @@ import styles from './Dashbord-styles.module.less'
 import {Card, Col, Row, Skeleton} from "antd";
 import Product from "../../components/Product/Product";
 
-const Dashboard: FunctionComponent<RouteComponentProps> = () => {
+const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
     const {products, productsFetching, totalCount} = useSelector((state: RootState) => state.allProducts);
     const {actualPage, pageChanged, sizeChanged, itemsPerPage} = useApiCallGetSearch({
         getAllValues: getAllProducts,

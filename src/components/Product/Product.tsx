@@ -3,6 +3,7 @@ import {IProduct} from "../../definitions";
 import {Button, Card, Col, Descriptions, Image, Row, Typography} from "antd";
 import styles from './Product-styles.module.less'
 import {PlusOutlined} from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 
 const {Title} = Typography
 const {Item} = Descriptions
@@ -12,8 +13,14 @@ interface IProductView {
 }
 
 const Product: FunctionComponent<IProductView> = ({product}) => {
+    const history = useHistory();
+
+    const goToProductDetailsViewHandler = (productId: number) => {
+        history.push(`/detail/${productId}`);
+    }
+
     return (
-        <Card className={styles.productCard}>
+        <Card onClick={() => goToProductDetailsViewHandler(product.id)} className={styles.productCard}>
             <Row justify={'center'} className={styles.productImageContainer}>
                 <Button className={styles.addProductIconBtn} icon={<PlusOutlined/>}>
                     {/*<Button className={styles.selectedProductIconBtn} icon={<CheckOutlined/>}>*/}

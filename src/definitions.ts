@@ -41,7 +41,7 @@ export interface IProduct {
   dimensional: number;
   eanNumber: string[];
   hasRichContent: boolean;
-  id: ReactText;
+  id: number;
   navigateUrl: string;
   pictures: IPicture[];
   price: number;
