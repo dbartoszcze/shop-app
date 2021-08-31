@@ -21,6 +21,7 @@ export interface IUseApiCallGetSearch {
   loadedDispatch: (data) => void;
   failureDispatch: () => void;
   completedDispatch: () => void;
+  location?: string
 }
 
 export type IGetAllValues = (

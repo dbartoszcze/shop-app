@@ -9,13 +9,17 @@ const useApiCallGetSearch = ({
                                  loadedDispatch,
                                  failureDispatch,
                                  completedDispatch,
+                                 location
                              }: IUseApiCallGetSearch) => {
     const [itemsPerPage, setItemsPerPage] = useState<number>(pageSize);
     const [actualPage, setActualPage] = useState<number>(1);
+    const [wasSessionStorageRead, setWasSessionStorageRead] = useState<boolean>(false)
 
     const getData = useCallback(
         async (dispatch: any) => {
             dispatch(fetchingDispatch());
+
+
             let content;
             try {
                 content = getAllValues && (await getAllValues(itemsPerPage, actualPage));
@@ -37,10 +41,6 @@ const useApiCallGetSearch = ({
         [getAllValues, itemsPerPage, actualPage, loadedDispatch, failureDispatch, completedDispatch, fetchingDispatch],
     );
 
-    useEffect(() => {
-        store.dispatch(getData);
-    }, [itemsPerPage, actualPage, getData, store]);
-
     const pageChanged = useCallback((page: number, e?: number) => {
         setActualPage(page);
     }, []);
@@ -49,6 +49,32 @@ const useApiCallGetSearch = ({
         setItemsPerPage(size);
         setActualPage(1);
     };
+
+    useEffect(() => {
+        if (location) {
+            let itemsPerPageFromStorage = sessionStorage.getItem('itemsPerPage');
+            let actualPageFromStorage = sessionStorage.getItem('actualPage');
+
+            if (itemsPerPageFromStorage) {
+                setItemsPerPage(+itemsPerPageFromStorage)
+            }
+
+            if (actualPageFromStorage) {
+                setActualPage(+actualPageFromStorage)
+            }
+        }
+        setWasSessionStorageRead(true);
+    }, [location]);
+
+    useEffect(() => {
+        if (location) {
+            sessionStorage.setItem('itemsPerPage', itemsPerPage.toString());
+            sessionStorage.setItem('actualPage', actualPage.toString());
+        }
+        if (wasSessionStorageRead) {
+            store.dispatch(getData);
+        }
+    }, [itemsPerPage, actualPage, location, getData, wasSessionStorageRead]);
 
     return {
         actualPage,

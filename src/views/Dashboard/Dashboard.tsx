@@ -26,6 +26,7 @@ const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
         loadedDispatch: productsLoaded,
         failureDispatch: productsFetchingFailure,
         completedDispatch: productsFetchingCompleted,
+        location: 'products'
     });
 
     return (
