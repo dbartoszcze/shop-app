@@ -1,1 +1,110 @@
 @import 'src/styles/variables.less';
+
+.customContent {
+  padding: @padding-sm 0;
+  min-height: @full-size !important;
+  background-color: @body-color !important;
+}
+
+.backButtonWrapper {
+  padding: @padding-xs @padding-xl;
+}
+
+.backButton {
+  font-size: @font-size-default;
+  font-weight: 500;
+  color: @gray-color !important;
+  display: flex;
+  align-items: center;
+}
+
+.backButtonIcon {
+  font-size: @font-size-medium * 1.1;
+  margin-right: 5px;
+}
+
+.detailCard {
+  margin: @padding-xl 10vw !important;
+}
+
+.productImage {
+  float: right;
+}
+
+.productImageCol {
+  display: flex;
+  justify-content: center;
+}
+
+.productImageContainer {
+  padding: @padding-lg @padding-xs;
+  background-color: @image-bg-color;
+  border-radius: @border-radius-default;
+
+  &:hover {
+    background-color: @image-bg-color-hovered;
+    transition: background-color 0.5s ease;
+  }
+}
+
+.smallDesc {
+  color: @gray-color !important;
+  margin-left: @margin-xs;
+  font-size: @font-size-smaller;
+}
+
+.mainPriceTitle {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+.occasionPriceTitle {
+  .mainPriceTitle();
+  color: @selected-product-bg-button !important;
+}
+
+.additionInfoContainer {
+  display: flex;
+  align-self: flex-end;
+}
+
+.productDescSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 @padding-md;
+}
+
+.oldPriceTitle {
+  color: @gray-color !important;
+  text-decoration: line-through;
+  margin-bottom: 0 !important;
+}
+
+.pricePerUnitDesc {
+  font-size: @font-size-smaller;
+  margin-top: 0 !important;
+}
+
+.promotionDesc {
+  margin-top: @margin-sm;
+}
+
+.addProductBtn {
+  box-shadow: 0 0.5rem 1rem rgba(1, 0, 39, .15) !important;
+  border: 3px solid #010027 !important;
+  font-weight: @font-bold;
+  border-radius: 20px;
+  height: 42px;
+  &:hover{
+    background-color: #010027;
+    color: @color-white;
+    transition: background-color 0.5s ease;
+  }
+}
+
+.actionBtnsContainer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

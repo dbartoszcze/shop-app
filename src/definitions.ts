@@ -21,6 +21,7 @@ export interface IUseApiCallGetSearch {
   loadedDispatch: (data) => void;
   failureDispatch: () => void;
   completedDispatch: () => void;
+  location?: string
 }
 
 export type IGetAllValues = (
@@ -41,14 +42,17 @@ export interface IProduct {
   dimensional: number;
   eanNumber: string[];
   hasRichContent: boolean;
-  id: ReactText;
+  id: number;
   navigateUrl: string;
   pictures: IPicture[];
+  oldPrice?: number
   price: number;
   pricePerUnit: string;
   promotion: {
     type: string;
   };
+  promotionFrom?: string;
+  promotionTo?: string;
   rossnetId: ReactText;
   totalReviews: number;
   unit: string;
