@@ -45,11 +45,14 @@ export interface IProduct {
   id: number;
   navigateUrl: string;
   pictures: IPicture[];
+  oldPrice?: number
   price: number;
   pricePerUnit: string;
   promotion: {
     type: string;
   };
+  promotionFrom?: string;
+  promotionTo?: string;
   rossnetId: ReactText;
   totalReviews: number;
   unit: string;
