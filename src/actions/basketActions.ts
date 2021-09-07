@@ -1,10 +1,10 @@
-import { IProductsResponse } from '../definitions';
+import {IBasketProduct} from '../definitions';
 
 enum basketProductsActionsTypes {
-    BASKET_PRODUCT_ADDED= 'BASKET_PRODUCT_ADDED',
+    BASKET_PRODUCT_ADDED = 'BASKET_PRODUCT_ADDED',
 }
 
-const addProductToBasket = (data: IProductsResponse) => ({
+const addProductToBasket = (data: IBasketProduct) => ({
     type: basketProductsActionsTypes.BASKET_PRODUCT_ADDED,
     payload: {
         data,

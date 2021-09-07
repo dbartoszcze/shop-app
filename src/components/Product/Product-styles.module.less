@@ -33,6 +33,11 @@
     color: inherit;
     border: none;
   }
+
+  &:focus {
+    color: inherit;
+    border: none;
+  }
 }
 
 .selectedProductIconBtn {
@@ -43,6 +48,11 @@
   z-index: 100;
 
   &:hover {
+    background-color: @selected-product-bg-button;
+    color: @color-white;
+  }
+
+  &:focus {
     background-color: @selected-product-bg-button;
     color: @color-white;
   }

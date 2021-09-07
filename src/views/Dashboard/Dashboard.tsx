@@ -12,6 +12,8 @@ import {
     productsListFetching,
     productsLoaded,
 } from '../../actions/productsActions';
+
+import {addProductToBasket} from '../../actions/basketActions';
 import {RouteComponentProps} from 'react-router-dom';
 import styles from './Dashbord-styles.module.less'
 import {Card, Col, Row, Skeleton} from "antd";
@@ -19,7 +21,8 @@ import Product from "../../components/Product/Product";
 
 const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
     const {products, productsFetching, totalCount} = useSelector((state: RootState) => state.allProducts);
-    const {selectedProducts, wasSessionRead} = useSelector((state: RootState) => state.basket);
+    const selectedIds = useSelector((state: RootState) => state.basket.selectedProducts.map(product => product.id));
+
     const {actualPage, pageChanged, sizeChanged, itemsPerPage} = useApiCallGetSearch({
         getAllValues: getAllProducts,
         store,
@@ -30,7 +33,11 @@ const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
         location: 'products'
     });
 
-    console.log({store})
+
+    const addProductToBasketHandler = (product: IProduct) => {
+        store.dispatch(addProductToBasket({...product, count: 1}))
+    }
+
 
     return (
         <div className={styles.customContent}>
@@ -39,7 +46,7 @@ const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
                     <Row gutter={[24, 24]}>
                         {products && products.map((product: IProduct) => (
                             <Col key={product.id} xl={6} lg={8} md={12} sm={12} xs={24}>
-                                <Product product={product}/>
+                                <Product selectedProductsIds={selectedIds} addProductToBasketHandler={addProductToBasketHandler} product={product}/>
                             </Col>
                         ))}
                     </Row>
