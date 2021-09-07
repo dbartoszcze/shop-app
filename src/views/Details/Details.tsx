@@ -10,6 +10,7 @@ import {Button, Card, Col, Descriptions, Image, Row, Skeleton, Typography} from 
 const {Link, Title, Text, Paragraph} = Typography
 
 const {Item} = Descriptions
+
 const Details: FunctionComponent = () => {
     const {productId} = useParams<any>();
     const history = useHistory();

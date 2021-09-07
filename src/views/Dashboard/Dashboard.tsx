@@ -19,6 +19,7 @@ import Product from "../../components/Product/Product";
 
 const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
     const {products, productsFetching, totalCount} = useSelector((state: RootState) => state.allProducts);
+    const {selectedProducts, wasSessionRead} = useSelector((state: RootState) => state.basket);
     const {actualPage, pageChanged, sizeChanged, itemsPerPage} = useApiCallGetSearch({
         getAllValues: getAllProducts,
         store,
@@ -28,6 +29,8 @@ const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
         completedDispatch: productsFetchingCompleted,
         location: 'products'
     });
+
+    console.log({store})
 
     return (
         <div className={styles.customContent}>
