@@ -5,7 +5,7 @@ import styles from './Product-styles.module.less'
 import {PlusOutlined} from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
-const {Title} = Typography
+const {Title, Text} = Typography
 const {Item} = Descriptions
 
 interface IProductView {
@@ -45,11 +45,16 @@ const Product: FunctionComponent<IProductView> = ({product}) => {
                 </Descriptions>
             </Row>
             <Row className={styles.productPriceDescription}>
-                <Descriptions>
-                    <Item className={styles.productPriceItem}>
+                <Col span={24}>
+                    {product?.oldPrice && (
+                        <Text className={styles.productOldPriceItem}>
+                            {product.oldPrice} zł
+                        </Text>
+                    )}
+                    <Text className={!product?.oldPrice ? styles.productPriceItem : styles.productPricePromItem}>
                         {product.price} zł
-                    </Item>
-                </Descriptions>
+                    </Text>
+                </Col>
             </Row>
         </Card>
     )
