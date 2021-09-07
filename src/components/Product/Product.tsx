@@ -2,19 +2,20 @@ import React, {FunctionComponent} from "react";
 import {IProduct} from "../../definitions";
 import {Button, Card, Col, Descriptions, Image, Row, Typography} from "antd";
 import styles from './Product-styles.module.less'
-import {PlusOutlined} from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import {CheckOutlined, PlusOutlined} from '@ant-design/icons';
+import {useHistory} from 'react-router-dom';
 
-const {Title} = Typography
+const {Title, Text} = Typography
 const {Item} = Descriptions
 
 interface IProductView {
-    product: IProduct
+    product: IProduct;
+    addProductToBasketHandler: (product: IProduct) => void;
+    selectedProductsIds: number[];
 }
 
-const Product: FunctionComponent<IProductView> = ({product}) => {
+const Product: FunctionComponent<IProductView> = ({product, addProductToBasketHandler, selectedProductsIds}) => {
     const history = useHistory();
-
     const goToProductDetailsViewHandler = (productId: number) => {
         history.push(`/detail/${productId}`);
     }
@@ -22,12 +23,20 @@ const Product: FunctionComponent<IProductView> = ({product}) => {
     return (
         <Card onClick={() => goToProductDetailsViewHandler(product.id)} className={styles.productCard}>
             <Row justify={'center'} className={styles.productImageContainer}>
-                <Button className={styles.addProductIconBtn} icon={<PlusOutlined/>}>
-                    {/*<Button className={styles.selectedProductIconBtn} icon={<CheckOutlined/>}>*/}
+                {selectedProductsIds.some(id => id === product.id) ? (
+                    <Button className={styles.selectedProductIconBtn} icon={<CheckOutlined/>} onClick={(e) => {
+                        e.stopPropagation();
+                    }}/>
 
-                </Button>
+                ) : (
+                    <Button className={styles.addProductIconBtn} icon={<PlusOutlined/>} onClick={(e) => {
+                        e.stopPropagation();
+                        addProductToBasketHandler(product)
+                    }}/>
+                )}
                 <Col span={24} className={styles.productImageCol}>
-                    <Image alt={`${product.brand} - ${product.caption}`} height={200} className={styles.productImage}
+                    <Image alt={`${product.brand} - ${product.caption}`} height={200}
+                           className={styles.productImage}
                            src={product.pictures[0].small}
                            preview={false}/>
                 </Col>
@@ -45,11 +54,16 @@ const Product: FunctionComponent<IProductView> = ({product}) => {
                 </Descriptions>
             </Row>
             <Row className={styles.productPriceDescription}>
-                <Descriptions>
-                    <Item className={styles.productPriceItem}>
+                <Col span={24}>
+                    {product?.oldPrice && (
+                        <Text className={styles.productOldPriceItem}>
+                            {product.oldPrice} zł
+                        </Text>
+                    )}
+                    <Text className={!product?.oldPrice ? styles.productPriceItem : styles.productPricePromItem}>
                         {product.price} zł
-                    </Item>
-                </Descriptions>
+                    </Text>
+                </Col>
             </Row>
         </Card>
     )

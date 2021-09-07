@@ -101,6 +101,25 @@
     color: @color-white;
     transition: background-color 0.5s ease;
   }
+  &:focus {
+    color: inherit;
+  }
+}
+
+.productIntoBasket{
+  .addProductBtn();
+  border: 3px solid #f8304e !important;
+  background-color: @selected-product-bg-button;
+  color: @color-white;
+  &:hover{
+    background-color: #f8304e;
+    transition: background-color 0.5s ease;
+  }
+  &:focus {
+    color: @color-white;
+    background-color: @selected-product-bg-button !important;
+  }
+
 }
 
 .actionBtnsContainer{

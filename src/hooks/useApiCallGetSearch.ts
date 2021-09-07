@@ -74,7 +74,7 @@ const useApiCallGetSearch = ({
         if (wasSessionStorageRead) {
             store.dispatch(getData);
         }
-    }, [itemsPerPage, actualPage, location, getData, wasSessionStorageRead]);
+    }, [itemsPerPage, actualPage, location, getData, wasSessionStorageRead, store]);
 
     return {
         actualPage,

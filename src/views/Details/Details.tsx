@@ -3,19 +3,25 @@ import {useHistory, useParams} from 'react-router-dom';
 import {IProduct} from "../../definitions";
 import {getProductData} from '../../services/products';
 import styles from './Details-styles.module.less'
-import {LeftCircleOutlined, ShoppingOutlined} from '@ant-design/icons';
+import {LeftCircleOutlined, ShoppingOutlined, CheckOutlined} from '@ant-design/icons';
 import moment from "moment";
+import store from '../../store/store';
 import {Button, Card, Col, Descriptions, Image, Row, Skeleton, Typography} from "antd";
+import {useSelector} from "react-redux";
+import {RootState} from "../../reducers/rootReducer";
+import {addProductToBasket} from "../../actions/basketActions";
 
 const {Link, Title, Text, Paragraph} = Typography
 
 const {Item} = Descriptions
+
 const Details: FunctionComponent = () => {
     const {productId} = useParams<any>();
     const history = useHistory();
 
     const [isProductDataFetching, setIsProductDataFetching] = useState<boolean>(true);
     const [productData, setProductData] = useState<IProduct | undefined>(undefined);
+    const selectedIds = useSelector((state: RootState) => state.basket.selectedProducts.map(product => product.id));
 
     const getProductDetailsData = useCallback(async () => {
         setIsProductDataFetching(true);
@@ -34,6 +40,10 @@ const Details: FunctionComponent = () => {
 
     const goToProductListViewHandler = () => {
         history.push(`/`);
+    }
+
+    const addProductToBasketHandler = (product: IProduct) => {
+        store.dispatch(addProductToBasket({...product, count: 1}))
     }
 
     useEffect(() => {
@@ -85,8 +95,14 @@ const Details: FunctionComponent = () => {
                                         className={styles.pricePerUnitDesc}>{productData?.pricePerUnit}</Text>
                                 </Col>
                                 <Col span={12} className={styles.actionBtnsContainer}>
-                                            <Button icon={<ShoppingOutlined/>} className={styles.addProductBtn}>Dodaj do
-                                                koszyka </Button>
+                                    {selectedIds.some(id => id === productData?.id) ? (
+                                        <Button icon={<CheckOutlined />} className={styles.productIntoBasket}>Dodano
+                                            do
+                                            koszyka </Button>
+                                    ) : (
+                                        <Button icon={<ShoppingOutlined/>} className={styles.addProductBtn} onClick={() => addProductToBasketHandler(productData!)}>Dodaj do
+                                            koszyka </Button>
+                                    )}
                                 </Col>
                                 {productData?.promotionFrom && productData?.promotionTo && (
                                     <Paragraph className={styles.promotionDesc}>Promocja trwa
