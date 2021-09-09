@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../reducers/rootReducer";
 import {IBasketProduct} from "../../definitions";
 import {CloseCircleOutlined, DeleteOutlined, MinusOutlined, PlusOutlined} from '@ant-design/icons';
+import {useHistory} from "react-router-dom";
 
 
 const {Title, Text} = Typography
@@ -23,7 +24,13 @@ interface IBasket {
 }
 
 const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVisible}) => {
+    const history = useHistory();
+
     const {selectedProducts, basketProductsFetching} = useSelector((state: RootState) => state.basket);
+
+    const goToProductDetailsViewHandler = (productId: number) => {
+        history.push(`/detail/${productId}`);
+    }
 
     return (
         <Drawer placement={"right"} visible={basketVisible} onClose={() => setBasketVisible(false)}
@@ -55,7 +62,10 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
                             avatar={<Image className={styles.basketProductImage} preview={false} width={120}
                                            height={140}
                                            src={product.pictures[0].medium}/>}
-                            title={product.brand}
+                            title={<span onClick={() => {
+                                setBasketVisible(false);
+                                goToProductDetailsViewHandler(product.id)
+                            }} className={styles.basketProductTitle}>{product.brand}</span>}
                             description={
                                 <Row>
                                     <Col span={24}>
