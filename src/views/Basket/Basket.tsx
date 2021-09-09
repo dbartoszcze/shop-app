@@ -7,8 +7,9 @@ import {RootState} from "../../reducers/rootReducer";
 import {IBasketProduct} from "../../definitions";
 import {CloseCircleOutlined, DeleteOutlined, MinusOutlined, PlusOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router-dom";
-
-
+import store from '../../store/store'
+import {incrementProductCount} from "../../actions/basketActions";
+const maxCount = 10;
 const {Title, Text} = Typography
 
 enum drawerSizes {
@@ -30,6 +31,10 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
 
     const goToProductDetailsViewHandler = (productId: number) => {
         history.push(`/detail/${productId}`);
+    }
+
+    const incrementProductCountHandler = (productId: number) => {
+        store.dispatch(incrementProductCount(productId));
     }
 
     return (
@@ -77,7 +82,7 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
                                         Cena za jedną sztukę: {product.price} zł
                                     </Col>
                                     <Col className={styles.countCol} span={24}>
-                                        <Button className={styles.incrementProductCount} icon={<PlusOutlined/>}/>
+                                        <Button disabled={product.count === maxCount} onClick={() => incrementProductCountHandler(product.id)} className={styles.incrementProductCount} icon={<PlusOutlined/>}/>
                                         <Text className={styles.productCount}>{product.count}</Text>
                                         <Button className={styles.decrementProductCount} icon={<MinusOutlined/>}/>
                                     </Col>
