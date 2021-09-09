@@ -9,7 +9,7 @@ import store from '../../store/store';
 import {Button, Card, Col, Descriptions, Image, Row, Skeleton, Typography} from "antd";
 import {useSelector} from "react-redux";
 import {RootState} from "../../reducers/rootReducer";
-import {addProductToBasket} from "../../actions/basketActions";
+import {addProductToBasket, removeProductFromBasket} from "../../actions/basketActions";
 
 const {Link, Title, Text, Paragraph} = Typography
 
@@ -44,6 +44,10 @@ const Details: FunctionComponent = () => {
 
     const addProductToBasketHandler = (product: IProduct) => {
         store.dispatch(addProductToBasket({...product, count: 1}))
+    }
+
+    const removeProductHandler = (productId: number) => {
+        store.dispatch(removeProductFromBasket(productId))
     }
 
     useEffect(() => {
@@ -96,7 +100,7 @@ const Details: FunctionComponent = () => {
                                 </Col>
                                 <Col span={12} className={styles.actionBtnsContainer}>
                                     {selectedIds.some(id => id === productData?.id) ? (
-                                        <Button icon={<CheckOutlined />} className={styles.productIntoBasket}>Dodano
+                                        <Button icon={<CheckOutlined />} className={styles.productIntoBasket} onClick={() => removeProductHandler(productData!.id)}>Dodano
                                             do
                                             koszyka </Button>
                                     ) : (

@@ -8,7 +8,8 @@ import {IBasketProduct} from "../../definitions";
 import {CloseCircleOutlined, DeleteOutlined, MinusOutlined, PlusOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router-dom";
 import store from '../../store/store'
-import {incrementProductCount} from "../../actions/basketActions";
+import {decrementProductCount, incrementProductCount, removeProductFromBasket} from "../../actions/basketActions";
+
 const maxCount = 10;
 const {Title, Text} = Typography
 
@@ -37,6 +38,14 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
         store.dispatch(incrementProductCount(productId));
     }
 
+    const decrementProductCountHandler = (productId: number) => {
+        store.dispatch(decrementProductCount(productId))
+    }
+
+    const removeProductHandler = (productId: number) => {
+        store.dispatch(removeProductFromBasket(productId))
+    }
+
     return (
         <Drawer placement={"right"} visible={basketVisible} onClose={() => setBasketVisible(false)}
                 className={styles.basketDrawer} width={drawerSizes[getWindowSize()]}>
@@ -59,7 +68,8 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
                     <List.Item
                         key={product.id}
                         actions={[
-                            <Button className={styles.removeProduct} icon={<DeleteOutlined/>}/>
+                            <Button onClick={() => removeProductHandler(product.id)} className={styles.removeProduct}
+                                    icon={<DeleteOutlined/>}/>
                         ]}
 
                     >
@@ -82,9 +92,13 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
                                         Cena za jedną sztukę: {product.price} zł
                                     </Col>
                                     <Col className={styles.countCol} span={24}>
-                                        <Button disabled={product.count === maxCount} onClick={() => incrementProductCountHandler(product.id)} className={styles.incrementProductCount} icon={<PlusOutlined/>}/>
+                                        <Button disabled={product.count === maxCount}
+                                                onClick={() => incrementProductCountHandler(product.id)}
+                                                className={styles.incrementProductCount} icon={<PlusOutlined/>}/>
                                         <Text className={styles.productCount}>{product.count}</Text>
-                                        <Button className={styles.decrementProductCount} icon={<MinusOutlined/>}/>
+                                        <Button disabled={product.count === 1}
+                                                onClick={() => decrementProductCountHandler(product.id)}
+                                                className={styles.decrementProductCount} icon={<MinusOutlined/>}/>
                                     </Col>
                                 </Row>
                             }/>
