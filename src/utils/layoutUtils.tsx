@@ -6,7 +6,7 @@ const getWindowSize = () => {
     if (width <= 768) {
         return 'small';
     }
-    if (width <= 1024) {
+    if (width <= 1366) {
         return 'middle';
     }
     return 'large';

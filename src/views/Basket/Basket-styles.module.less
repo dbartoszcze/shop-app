@@ -1,1 +1,69 @@
 @import 'src/styles/variables.less';
+
+.basketList{
+
+}
+
+.basketDivider{
+  margin-top: 0 !important;
+}
+
+.basketProductImage{
+  object-fit: contain;
+  background-color: @image-bg-color;
+  border-radius: @border-radius-default;
+}
+
+.listActionsBtns {
+  border: none;
+  box-shadow: none;
+}
+
+.removeProduct{
+  .listActionsBtns();
+  color: @selected-product-bg-button;
+
+
+
+  &:hover, &:focus{
+    color: @selected-product-bg-button;
+  }
+}
+
+.clearBasket{
+  .listActionsBtns();
+  color: @selected-product-bg-button;
+  padding-right: @padding-sm !important;
+  &:hover, &:focus{
+    color: @selected-product-bg-button;
+  }
+}
+
+.incrementProductCount{
+  .listActionsBtns();
+  color: @increment-button;
+
+  &:hover, &:focus{
+    color: @increment-button;
+  }
+}
+
+
+.decrementProductCount{
+  .listActionsBtns();
+  color: @decrement-button-color;
+
+  &:hover, &:focus{
+    color: @decrement-button-color;
+  }
+}
+
+.countCol{
+  margin-top: @margin-sm !important;
+}
+
+.productCount{
+  margin: 0 @margin-xs;
+  font-size: @font-size-medium !important;
+  font-weight: 600;
+}
