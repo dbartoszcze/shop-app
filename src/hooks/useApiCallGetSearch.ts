@@ -52,8 +52,8 @@ const useApiCallGetSearch = ({
 
     useEffect(() => {
         if (location) {
-            let itemsPerPageFromStorage = sessionStorage.getItem('itemsPerPage');
-            let actualPageFromStorage = sessionStorage.getItem('actualPage');
+            const itemsPerPageFromStorage = sessionStorage.getItem('itemsPerPage');
+            const actualPageFromStorage = sessionStorage.getItem('actualPage');
 
             if (itemsPerPageFromStorage) {
                 setItemsPerPage(+itemsPerPageFromStorage)

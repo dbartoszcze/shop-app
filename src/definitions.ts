@@ -79,6 +79,7 @@ export interface IProductsStore {
 export interface IBasketStore {
     selectedProducts: IBasketProduct[];
     wasSessionRead: boolean;
+    basketProductsFetching: boolean
 }
 
 export interface IPicture {
