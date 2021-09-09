@@ -10,11 +10,12 @@ const {Item} = Descriptions
 
 interface IProductView {
     product: IProduct;
+    removeProductHandler: (productId: number) => void;
     addProductToBasketHandler: (product: IProduct) => void;
     selectedProductsIds: number[];
 }
 
-const Product: FunctionComponent<IProductView> = ({product, addProductToBasketHandler, selectedProductsIds}) => {
+const Product: FunctionComponent<IProductView> = ({product,removeProductHandler, addProductToBasketHandler, selectedProductsIds}) => {
     const history = useHistory();
     const goToProductDetailsViewHandler = (productId: number) => {
         history.push(`/detail/${productId}`);
@@ -26,6 +27,7 @@ const Product: FunctionComponent<IProductView> = ({product, addProductToBasketHa
                 {selectedProductsIds.some(id => id === product.id) ? (
                     <Button className={styles.selectedProductIconBtn} icon={<CheckOutlined/>} onClick={(e) => {
                         e.stopPropagation();
+                        removeProductHandler(product.id);
                     }}/>
 
                 ) : (
