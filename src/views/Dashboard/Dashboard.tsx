@@ -34,14 +34,12 @@ const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
     });
 
 
-    const addProductToBasketHandler = (product: IProduct) => {
+    const addProductToBasketHandler = (product: IProduct) =>
         store.dispatch(addProductToBasket({...product, count: 1}))
-    }
 
-    const removeProductHandler = (productId: number) => {
+
+    const removeProductHandler = (productId: number) =>
         store.dispatch(removeProductFromBasket(productId))
-    }
-
 
     return (
         <div className={styles.customContent}>
@@ -50,7 +48,8 @@ const Dashboard: FunctionComponent<RouteComponentProps> = ({history}) => {
                     <Row gutter={[24, 24]}>
                         {products && products.map((product: IProduct) => (
                             <Col key={product.id} xl={6} lg={8} md={12} sm={12} xs={24}>
-                                <Product selectedProductsIds={selectedIds} removeProductHandler={removeProductHandler} addProductToBasketHandler={addProductToBasketHandler} product={product}/>
+                                <Product selectedProductsIds={selectedIds} removeProductHandler={removeProductHandler}
+                                         addProductToBasketHandler={addProductToBasketHandler} product={product}/>
                             </Col>
                         ))}
                     </Row>

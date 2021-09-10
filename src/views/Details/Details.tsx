@@ -3,7 +3,7 @@ import {useHistory, useParams} from 'react-router-dom';
 import {IProduct} from "../../definitions";
 import {getProductData} from '../../services/products';
 import styles from './Details-styles.module.less'
-import {LeftCircleOutlined, ShoppingOutlined, CheckOutlined} from '@ant-design/icons';
+import {CheckOutlined, LeftCircleOutlined, ShoppingOutlined} from '@ant-design/icons';
 import moment from "moment";
 import store from '../../store/store';
 import {Button, Card, Col, Descriptions, Image, Row, Skeleton, Typography} from "antd";
@@ -38,17 +38,17 @@ const Details: FunctionComponent = () => {
         }
     }, [productId]);
 
-    const goToProductListViewHandler = () => {
+    const goToProductListViewHandler = () =>
         history.push(`/`);
-    }
 
-    const addProductToBasketHandler = (product: IProduct) => {
+
+    const addProductToBasketHandler = (product: IProduct) =>
         store.dispatch(addProductToBasket({...product, count: 1}))
-    }
 
-    const removeProductHandler = (productId: number) => {
+
+    const removeProductHandler = (productId: number) =>
         store.dispatch(removeProductFromBasket(productId))
-    }
+
 
     useEffect(() => {
         getProductDetailsData()
@@ -100,11 +100,13 @@ const Details: FunctionComponent = () => {
                                 </Col>
                                 <Col span={12} className={styles.actionBtnsContainer}>
                                     {selectedIds.some(id => id === productData?.id) ? (
-                                        <Button icon={<CheckOutlined />} className={styles.productIntoBasket} onClick={() => removeProductHandler(productData!.id)}>Dodano
+                                        <Button icon={<CheckOutlined/>} className={styles.productIntoBasket}
+                                                onClick={() => removeProductHandler(productData!.id)}>Dodano
                                             do
                                             koszyka </Button>
                                     ) : (
-                                        <Button icon={<ShoppingOutlined/>} className={styles.addProductBtn} onClick={() => addProductToBasketHandler(productData!)}>Dodaj do
+                                        <Button icon={<ShoppingOutlined/>} className={styles.addProductBtn}
+                                                onClick={() => addProductToBasketHandler(productData!)}>Dodaj do
                                             koszyka </Button>
                                     )}
                                 </Col>

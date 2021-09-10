@@ -30,21 +30,21 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
 
     const {selectedProducts, basketProductsFetching} = useSelector((state: RootState) => state.basket);
 
-    const goToProductDetailsViewHandler = (productId: number) => {
+    const goToProductDetailsViewHandler = (productId: number) =>
         history.push(`/detail/${productId}`);
-    }
 
-    const incrementProductCountHandler = (productId: number) => {
+
+    const incrementProductCountHandler = (productId: number) =>
         store.dispatch(incrementProductCount(productId));
-    }
 
-    const decrementProductCountHandler = (productId: number) => {
-        store.dispatch(decrementProductCount(productId))
-    }
 
-    const removeProductHandler = (productId: number) => {
+    const decrementProductCountHandler = (productId: number, count: number) =>
+        count === 1 ? removeProductHandler(productId) : store.dispatch(decrementProductCount(productId))
+
+
+    const removeProductHandler = (productId: number) =>
         store.dispatch(removeProductFromBasket(productId))
-    }
+
 
     return (
         <Drawer placement={"right"} visible={basketVisible} onClose={() => setBasketVisible(false)}
@@ -96,8 +96,7 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
                                                 onClick={() => incrementProductCountHandler(product.id)}
                                                 className={styles.incrementProductCount} icon={<PlusOutlined/>}/>
                                         <Text className={styles.productCount}>{product.count}</Text>
-                                        <Button disabled={product.count === 1}
-                                                onClick={() => decrementProductCountHandler(product.id)}
+                                        <Button onClick={() => decrementProductCountHandler(product.id, product.count)}
                                                 className={styles.decrementProductCount} icon={<MinusOutlined/>}/>
                                     </Col>
                                 </Row>
