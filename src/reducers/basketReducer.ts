@@ -23,18 +23,16 @@ export const basketReducer = (state = initialBasketStore, action: IAction | IAct
         case basketProductsActionsTypes.INCREMENT_PRODUCT_COUNT:
             return {
                 ...state,
-                ...state.selectedProducts.map(product => {
-                    if (product.id !== action.payload.id) return product;
-                    return {...product, count: product.count++}
-                })
+                selectedProducts: [...state.selectedProducts.map(product => (
+                    product.id === action.payload.id ? {...product, count: product.count + 1} : product
+                ))]
             }
         case basketProductsActionsTypes.DECREMENT_PRODUCT_COUNT:
             return {
                 ...state,
-                ...state.selectedProducts.map(product => {
-                    if (product.id !== action.payload.id) return product;
-                    return {...product, count: product.count--}
-                })
+                selectedProducts: [...state.selectedProducts.map(product => (
+                    product.id === action.payload.id ? {...product, count: product.count - 1} : product
+                ))]
             }
         case basketProductsActionsTypes.REMOVE_PRODUCT_FROM_BASKET:
             return {
