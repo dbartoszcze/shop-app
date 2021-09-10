@@ -15,11 +15,16 @@ interface IProductView {
     selectedProductsIds: number[];
 }
 
-const Product: FunctionComponent<IProductView> = ({product,removeProductHandler, addProductToBasketHandler, selectedProductsIds}) => {
+const Product: FunctionComponent<IProductView> = ({
+                                                      product,
+                                                      removeProductHandler,
+                                                      addProductToBasketHandler,
+                                                      selectedProductsIds
+                                                  }) => {
     const history = useHistory();
-    const goToProductDetailsViewHandler = (productId: number) => {
+    const goToProductDetailsViewHandler = (productId: number) =>
         history.push(`/detail/${productId}`);
-    }
+
 
     return (
         <Card onClick={() => goToProductDetailsViewHandler(product.id)} className={styles.productCard}>
