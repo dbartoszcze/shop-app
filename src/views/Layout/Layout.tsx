@@ -6,6 +6,8 @@ import {RootState} from "../../reducers/rootReducer";
 import styles from './Layout-styles.module.less';
 import Basket from "../Basket/Basket";
 import {ShoppingOutlined} from "@ant-design/icons";
+import store from "../../store/store";
+import {initBasketFromSessionData, toggleSessionRead} from '../../actions/basketActions';
 
 const {Header, Content} = Layout;
 const {Title} = Typography
@@ -15,28 +17,28 @@ const PageLayout: React.FC<ReactNode & RouteComponentProps> = ({children, locati
 
 
     const [basketVisible, setBasketVisible] = useState<boolean>(false);
-    const {wasSessionRead} = useSelector((state: RootState) => state.basket)
+    const {wasSessionRead, selectedProducts} = useSelector((state: RootState) => state.basket)
     const productsIntoBasketCount = useSelector((state: RootState) => state.basket.selectedProducts.length);
-    const productsListToStorage = useSelector((state: RootState) => state.basket.selectedProducts.map(product => ({
-        id: product.id,
-        count: product.count
-    })))
+
 
     useEffect(() => {
         if (wasSessionRead) {
-            sessionStorage.setItem('basketProducts', JSON.stringify(productsListToStorage));
+            sessionStorage.setItem('basketProducts', JSON.stringify(selectedProducts));
         } else {
-            const basketProductsIds = sessionStorage.getItem('basketProducts');
-            if (basketProductsIds) {
-                const parsedProductsIds = JSON.parse(basketProductsIds);
-                if (parsedProductsIds.length) {
-                    //init basket by api call with produducts ids
+            const basketProducts = sessionStorage.getItem('basketProducts');
+            if (basketProducts) {
+                const parsedBasketProducts = JSON.parse(basketProducts);
+                if (parsedBasketProducts.length) {
+                    //todo - by fetching on saved ids with count
+                    store.dispatch(initBasketFromSessionData(parsedBasketProducts))
                 } else {
-                    //change is session read on true
+                    store.dispatch(toggleSessionRead());
                 }
+            } else {
+                store.dispatch(toggleSessionRead());
             }
         }
-    }, [wasSessionRead, productsListToStorage])
+    }, [wasSessionRead, selectedProducts])
 
 
     return (
