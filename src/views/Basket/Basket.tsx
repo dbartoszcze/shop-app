@@ -8,7 +8,12 @@ import {IBasketProduct} from "../../definitions";
 import {CloseCircleOutlined, DeleteOutlined, MinusOutlined, PlusOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router-dom";
 import store from '../../store/store'
-import {decrementProductCount, incrementProductCount, removeProductFromBasket} from "../../actions/basketActions";
+import {
+    decrementProductCount,
+    incrementProductCount,
+    removeProductFromBasket,
+    removeProductsFromBasket
+} from "../../actions/basketActions";
 
 const maxCount = 10;
 const {Title, Text} = Typography
@@ -45,6 +50,9 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
     const removeProductHandler = (productId: number) =>
         store.dispatch(removeProductFromBasket(productId))
 
+    const removeProductsHandler = () =>
+        store.dispatch(removeProductsFromBasket())
+
 
     return (
         <Drawer placement={"right"} visible={basketVisible} onClose={() => setBasketVisible(false)}
@@ -54,7 +62,8 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
             {selectedProducts && selectedProducts.length ? (
                 <Row className={styles.removeAllProductsContainer}>
                     <Col offset={17} span={7}>
-                        <Button className={styles.clearBasket} icon={<CloseCircleOutlined/>}>Wyczyść koszyk</Button>
+                        <Button onClick={() => removeProductsHandler()} className={styles.clearBasket}
+                                icon={<CloseCircleOutlined/>}>Wyczyść koszyk</Button>
                     </Col>
                 </Row>
             ) : null}
