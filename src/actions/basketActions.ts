@@ -5,6 +5,7 @@ enum basketProductsActionsTypes {
     INCREMENT_PRODUCT_COUNT = 'INCREMENT_PRODUCT_COUNT',
     DECREMENT_PRODUCT_COUNT = 'DECREMENT_PRODUCT_COUNT',
     REMOVE_PRODUCT_FROM_BASKET = 'REMOVE_PRODUCT_FROM_BASKET',
+    REMOVE_PRODUCTS_FROM_BASKET = 'REMOVE_PRODUCTS_FROM_BASKET',
     INIT_BASKET_FROM_SESSION_DATA = 'INIT_BASKET_FROM_SESSION_DATA',
     TOGGLE_SESSION_READ = 'TOGGLE_SESSION_READ'
 }
@@ -48,6 +49,10 @@ const removeProductFromBasket = (id: number) => ({
     }
 })
 
+const removeProductsFromBasket = () => ({
+    type: basketProductsActionsTypes.REMOVE_PRODUCTS_FROM_BASKET,
+})
+
 
 export {
     basketProductsActionsTypes,
@@ -55,6 +60,7 @@ export {
     incrementProductCount,
     decrementProductCount,
     removeProductFromBasket,
+    removeProductsFromBasket,
     initBasketFromSessionData,
     toggleSessionRead
 };

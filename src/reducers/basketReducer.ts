@@ -41,6 +41,11 @@ export const basketReducer = (state = initialBasketStore, action: IAction | IAct
                 ...state,
                 selectedProducts: state.selectedProducts.filter(product => product.id !== action.payload.id)
             }
+        case basketProductsActionsTypes.REMOVE_PRODUCTS_FROM_BASKET:
+            return {
+                ...state,
+                selectedProducts: []
+            }
         default:
             console.warn(`Brak akcji: ${action.type}`);
             return state;
