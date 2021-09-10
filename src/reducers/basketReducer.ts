@@ -4,6 +4,17 @@ import {basketProductsActionsTypes} from '../actions/basketActions';
 
 export const basketReducer = (state = initialBasketStore, action: IAction | IActionProductFetching) => {
     switch (action.type) {
+        case basketProductsActionsTypes.TOGGLE_SESSION_READ:
+            return {
+                ...state,
+                wasSessionRead: true
+            }
+        case basketProductsActionsTypes.INIT_BASKET_FROM_SESSION_DATA:
+            return {
+                ...state,
+                selectedProducts: [...action.payload.data],
+                wasSessionRead: true
+            }
         case basketProductsActionsTypes.BASKET_PRODUCT_ADDED:
             return {
                 ...state,
