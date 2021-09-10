@@ -7,7 +7,6 @@ import styles from './Layout-styles.module.less';
 import Basket from "../Basket/Basket";
 import {ShoppingOutlined} from "@ant-design/icons";
 import store from "../../store/store";
-import {cloneDeep} from 'lodash';
 import {initBasketFromSessionData, toggleSessionRead} from '../../actions/basketActions';
 
 const {Header, Content} = Layout;
@@ -38,7 +37,7 @@ const PageLayout: React.FC<ReactNode & RouteComponentProps> = ({children, locati
                 store.dispatch(toggleSessionRead())
             }
         }
-    }, [wasSessionRead, cloneDeep(selectedProducts)])
+    }, [wasSessionRead, selectedProducts])
 
     useEffect(() => {
         initBasket()
