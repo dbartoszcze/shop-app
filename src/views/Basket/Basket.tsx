@@ -14,6 +14,7 @@ import {
     removeProductFromBasket,
     removeProductsFromBasket
 } from "../../actions/basketActions";
+import BasketSummary from "../../components/BasketSummary/BasketSummary";
 
 const maxCount = 10;
 const {Title, Text} = Typography
@@ -57,7 +58,7 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
     return (
         <Drawer placement={"right"} visible={basketVisible} onClose={() => setBasketVisible(false)}
                 className={styles.basketDrawer} width={drawerSizes[getWindowSize()]}>
-            <PageHeader title={<Title level={3}>Koszyk</Title>}/>
+            <PageHeader className={styles.drawerTitle} title={<Title level={3}>Koszyk</Title>}/>
             <Divider className={styles.basketDivider}/>
             {selectedProducts && selectedProducts.length ? (
                 <Row className={styles.removeAllProductsContainer}>
@@ -86,10 +87,17 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
                             avatar={<Image className={styles.basketProductImage} preview={false} width={120}
                                            height={140}
                                            src={product.pictures[0].medium}/>}
-                            title={<span onClick={() => {
-                                setBasketVisible(false);
-                                goToProductDetailsViewHandler(product.id)
-                            }} className={styles.basketProductTitle}>{product.brand}</span>}
+                            title={
+                                <span
+                                    onClick={() => {
+                                        setBasketVisible(false);
+                                        goToProductDetailsViewHandler(product.id)
+                                    }}
+                                    className={styles.basketProductTitle}
+                                >
+                                    {product.brand}
+                                </span>
+                            }
                             description={
                                 <Row>
                                     <Col span={24}>
@@ -107,12 +115,17 @@ const Basket: FunctionComponent<IBasket> = ({basketVisible = false, setBasketVis
                                         <Text className={styles.productCount}>{product.count}</Text>
                                         <Button onClick={() => decrementProductCountHandler(product.id, product.count)}
                                                 className={styles.decrementProductCount} icon={<MinusOutlined/>}/>
+                                        <Text className={styles.totalPrice}
+                                        >{((product?.oldPrice || product?.price) * product.count).toFixed(2)} zł</Text>
                                     </Col>
                                 </Row>
                             }/>
                     </List.Item>
                 )}>
             </List>
+            {selectedProducts.length ? (
+                <BasketSummary basketProductsList={selectedProducts}/>
+            ) : null}
         </Drawer>
     )
 }
